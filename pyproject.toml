@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "moshimoshi"
-version = "0.1.4"
+version = "0.1.5"
 description = "call a function in any python scripts using a formated string or json"
 authors = ["Nutchanon Ninyawee <me@nutchanon.org>"]
 license = "ISC"
@@ -13,6 +13,8 @@ parse_with_dot_access = "^1.17.1"
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.7.1"
+pytest = "^6.0.2"
+pytest-asyncio = "^0.14.0"
 
 [build-system]
 requires = ["poetry>=0.12"]

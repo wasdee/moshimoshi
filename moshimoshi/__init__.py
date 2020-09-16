@@ -11,19 +11,21 @@ class moshi:
     def __new__(cls, to: str, *args, fallback: Callable = None, **kwargs):
         function_path = a_json = to
 
+        # test hypothesis if to is a json
         try:
             call_detail = json.loads(a_json)
 
             function_path = call_detail["call"]
+
             # prioritize args and kwargs
-            args = [*call_detail["args"], *args]
-            kwargs = {**call_detail["kwargs"], **kwargs}
+            args = [*call_detail.get("args", tuple()), *args]
+            kwargs = {**call_detail.get("kwargs", dict()), **kwargs}
 
         except JSONDecodeError:
             pass
 
         parsed = parse(r"{import_path}:{function_name:w}", function_path)
-        if parsed:
+        if parsed is None:
             if fallback:
                 return fallback(*args, **kwargs)
             else:
@@ -46,7 +48,7 @@ class moshi:
 
     @classmethod
     async def moshi(cls, to: str, *args, fallback: Callable = None, **kwargs):
-        ret = cls(to, *args, fallback, **kwargs)
+        ret = cls(to, *args, fallback=fallback, **kwargs)
         if iscoroutine(ret):
             return await ret
         else:
