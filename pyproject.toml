@@ -1,9 +1,11 @@
 [tool.poetry]
 name = "moshimoshi"
-version = "0.1.0"
+version = "0.1.1"
 description = "call a function in any python scripts using a formated string or json"
 authors = ["Nutchanon Ninyawee <me@nutchanon.org>"]
 license = "ISC"
+readme = "README.md"
+repository = "https://github.com/CircleOnCircles/moshimoshi"
 
 [tool.poetry.dependencies]
 python = "^3.7"
