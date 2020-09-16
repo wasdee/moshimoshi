@@ -2,21 +2,17 @@ import importlib
 import json
 from inspect import iscoroutine
 from json import JSONDecodeError
+from typing import Callable
 
 from parse import parse
 
 
 class moshi:
-    def __new__(cls, *args, **kwargs):
-        function_path = aJson = args[0]
-
-        # isolate fallback from kwargs
-        fallback = kwargs.get("fallback")
-        if fallback:
-            del kwargs["fallback"]
+    def __new__(cls, to: str, *args, fallback: Callable = None, **kwargs):
+        function_path = a_json = to
 
         try:
-            call_detail = json.loads(aJson)
+            call_detail = json.loads(a_json)
 
             function_path = call_detail["call"]
             # prioritize args and kwargs
