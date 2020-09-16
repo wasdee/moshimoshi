@@ -23,8 +23,8 @@ class moshi:
             args = [*call_detail["args"], *args]
             kwargs = {**call_detail["kwargs"], **kwargs}
 
-        except JSONDecodeError as e:
-            raise e
+        except JSONDecodeError:
+            pass
 
         parsed = parse(r"{import_path}:{function_name:w}", function_path)
         import_path = parsed["import_path"]
@@ -59,8 +59,8 @@ class moshi:
             args = [*call_detail["args"], *args]
             kwargs = {**call_detail["kwargs"], **kwargs}
 
-        except JSONDecodeError as e:
-            raise e
+        except JSONDecodeError:
+            pass
 
         parsed = parse(r"{import_path}:{function_name:w}", function_path)
         import_path = parsed["import_path"]

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "moshimoshi"
-version = "0.1.1"
+version = "0.1.2"
 description = "call a function in any python scripts using a formated string or json"
 authors = ["Nutchanon Ninyawee <me@nutchanon.org>"]
 license = "ISC"
