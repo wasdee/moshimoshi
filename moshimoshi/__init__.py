@@ -44,42 +44,10 @@ class moshi:
             else:
                 raise e
 
-    @staticmethod
-    async def moshi(*args, **kwargs):
-        function_path = aJson = args[0]
-
-        # isolate fallback from kwargs
-        fallback = kwargs.get("fallback")
-        if fallback:
-            del kwargs["fallback"]
-
-        try:
-            call_detail = json.loads(aJson)
-
-            function_path = call_detail["call"]
-            # prioritize args and kwargs
-            args = [*call_detail["args"], *args]
-            kwargs = {**call_detail["kwargs"], **kwargs}
-
-        except JSONDecodeError:
-            pass
-
-        parsed = parse(r"{import_path}:{function_name:w}", function_path)
-        import_path = parsed["import_path"]
-        function_name = parsed["function_name"]
-
-        try:
-            module = importlib.import_module(f"{import_path}")
-            function = getattr(module, function_name)
-            ret = function(*args, **kwargs)
-            if iscoroutine(ret):
-                await ret
-
-        except ModuleNotFoundError as e:
-            if fallback:
-                ret = fallback(*args, **kwargs)
-                if iscoroutine(ret):
-                    await ret
-
-            else:
-                raise e
+    @classmethod
+    async def moshi(cls, to: str, *args, fallback: Callable = None, **kwargs):
+        ret = cls(to, *args, fallback, **kwargs)
+        if iscoroutine(ret):
+            return await ret
+        else:
+            return ret
