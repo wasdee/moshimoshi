@@ -23,6 +23,12 @@ class moshi:
             pass
 
         parsed = parse(r"{import_path}:{function_name:w}", function_path)
+        if parsed:
+            if fallback:
+                return fallback(*args, **kwargs)
+            else:
+                raise Exception("argument `to` is invalid.")
+
         import_path = parsed["import_path"]
         function_name = parsed["function_name"]
 
