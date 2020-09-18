@@ -1,4 +1,4 @@
-# moshimoshi
+# moshi moshi~
 > call a function in any python scripts using a formated string or json
 
 ## TLDR
