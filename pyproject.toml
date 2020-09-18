@@ -10,6 +10,7 @@ repository = "https://github.com/CircleOnCircles/moshimoshi"
 [tool.poetry.dependencies]
 python = "^3.7"
 parse_with_dot_access = "^1.17.1"
+pydantic = "^1.6.1"
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.7.1"

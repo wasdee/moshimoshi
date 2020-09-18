@@ -2,9 +2,23 @@ import importlib
 import json
 from inspect import iscoroutine
 from json import JSONDecodeError
-from typing import Callable
+from typing import Any, Callable, Dict, List, Union
 
 from parse import parse
+from pydantic import BaseModel, validator
+
+
+class Moshi(BaseModel):
+    call: Union[str, Callable]
+    args: List[Any]
+    kwargs: Dict[str, Any]
+
+    @validator("call")
+    def convert2str(cls, value: Union[str, Callable]):
+        if callable(value):
+            # TODO: after read it still in doubt what is the best
+            value = f"{value.__module__}:{value.__qualname__}"
+        return value
 
 
 class moshi:
@@ -53,3 +67,7 @@ class moshi:
             return await ret
         else:
             return ret
+
+    @staticmethod
+    def to_json(to: Union[str, Callable], *args, **kwargs):
+        return Moshi(call=to, args=args, kwargs=kwargs).json()
