@@ -1,6 +1,6 @@
 # moshimoshi
 > call a function in any python scripts using a formated string or json
-It
+
 ## TLDR
 ```bash
 pip install moshimoshi
