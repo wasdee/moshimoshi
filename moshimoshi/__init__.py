@@ -4,6 +4,7 @@ from inspect import iscoroutine
 from json import JSONDecodeError
 from typing import Any, Callable, Dict, List, Union
 
+from loguru import logger
 from parse import parse
 from pydantic import BaseModel, validator
 
@@ -54,7 +55,15 @@ class moshi:
             return function(*args, **kwargs)
 
         except ModuleNotFoundError as e:
+
             if fallback:
+                import os
+
+                logger.debug(
+                    "Fallback is about to be returned. This is cwd, {}", os.getcwd()
+                )
+                logger.exception("The exception")
+
                 return fallback(*args, **kwargs)
 
             else:
